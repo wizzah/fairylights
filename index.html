@@ -11,19 +11,25 @@
     }
 
 	.demo-dot {
-	  -webkit-animation: xAxis 2.5s infinite cubic-bezier(0.02, 0.01, 0.21, 1);
-	  animation: xAxis 2.5s infinite cubic-bezier(0.02, 0.01, 0.21, 1);
+	  /*-webkit-animation: xAxis 2.5s infinite cubic-bezier(0.02, 0.01, 0.21, 1);*/
+	  /*animation: xAxis 2.5s infinite cubic-bezier(0.02, 0.01, 0.21, 1);*/
+    position: absolute;
 	}
 
 	.demo-dot::after {
 	  content: '';
 	  display: block;
-	  width: 20px;
-	  height: 20px;
+	  width: 40px;
+	  height: 40px;
 	  border-radius: 20px;
-	  background-color: #fff;
-	  -webkit-animation: yAxis 2.5s infinite cubic-bezier(0.3, 0.27, 0.07, 1.64);
+	  /*background-color: #fff;*/
+
+	 /* -webkit-animation: yAxis 2.5s infinite cubic-bezier(0.3, 0.27, 0.07, 1.64);
 	  animation: yAxis 2.5s infinite cubic-bezier(0.3, 0.27, 0.07, 1.64);
+    */
+    /*background: radial-gradient(ellipse at 50% -3%, rgba(96, 251, 202, 0.8), rgba(112, 220, 255, 0.5), rgba(255, 116, 225, 0.0) 50%), radial-gradient(circle at 80% 10%, rgba(96, 251, 202, 0.8), rgba(255, 255, 255, 0.0) 2%), radial-gradient(circle at 90% 20%, rgba(255, 251, 202, 0.8), rgba(255, 255, 255, 0.0) 1%);*/
+    /*background-image: radial-gradient(1px at 10px 50% , rgba(255,153,0, 1) 0%, rgba(255,255, 0, 0.2), rgba(255, 255, 0, 0) 20px);*/
+    background-image: radial-gradient(1px at 20px 50% , rgba(255,153,0, 1), rgba(255,255, 0, 0.4), rgba(255, 255, 0, 0) 22px)
 	}
 
 	@-webkit-keyframes yAxis {
@@ -64,13 +70,76 @@
     </style>
   </head>
   <body>
-  	<div id="holder" style="margin-top: 25%; margin-left: 25%">
+  	<div id="holder">
 	  	<div class="demo-dot"></div>
 	  	<div class="demo-dot"></div>
 	  	<div class="demo-dot"></div>
   	</div>
   </body>
   <script>
+  // Original JavaScript code by Chirp Internet: www.chirp.com.au
+// Please acknowledge use of this code by including this header.
+
+(function() {
+
+  function rando_num(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
+  window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+  // var field = document.getElementById("field");
+  var field = window;
+  console.log(field, field.innerWidth, "client width");
+  // var ball = document.getElementById("ball");
+  var fairy = document.getElementsByClassName("demo-dot");
+  console.log(fairy);
+
+  var maxX = field.innerWidth - fairy[0].offsetWidth;
+  var maxY = field.innerHeight - fairy[0].offsetHeight;
+
+  var duration = 4; // seconds
+  var gridSize = 100; // pixels
+
+  var start = null;
+  var stretchFactor;
+
+  function step(timestamp)
+  {
+    var progress, x, y;
+    if(start === null) {
+      start = timestamp;
+      stretchFactor = 1 + (Math.random() * 3);
+    }
+
+    progress = (timestamp - start) / duration / 1000; // percent
+    // console.log((timestamp - start)/duration, "timestamp");
+    // console.log(((timestamp - start)/duration)+rando_num(1, 100), "tampstamp plus rando num");
+    // console.log(((timestamp - start)/duration)+rando_num(1, 100)/1000, "tampstamp percent");
+
+    x = stretchFactor * Math.sin(progress * 2 * Math.PI); // x = ƒ(t)
+    y = Math.cos(progress * 2 * Math.PI); // y = ƒ(t)
+
+    // x = rando_num(0, 10) * Math.sin(progress * 2 * Math.PI); // x = ƒ(t)
+    // y = Math.cos(rando_num(0, 10) * 2 * Math.PI); // y = ƒ(t)
+
+    // for(var i = 0; i < fairy.length; i++) {
+      fairy[0].style.left = maxX/2 + (gridSize * x) + "px";
+      fairy[0].style.bottom = maxY/2 + (gridSize * y) + "px";
+      fairy[1].style.left = maxX/3 + (gridSize * x) + "px";
+      fairy[1].style.bottom = maxY/3 + (gridSize * y) + "px";
+    // }
+  
+
+    if(progress >= 1) start = null; // reset to start position
+    requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+
+})();
+  </script>
+ <!--  <script>
   //update them all first
   for(var i = 0; i < document.querySelectorAll(".demo-dot").length; i++) {
   	var x1 = rando_num(0, 1);
@@ -80,31 +149,53 @@
   	document.querySelectorAll(".demo-dot")[i].setAttribute("style", "animation: xAxis "+Math.round(rando_num(0.5, 4))+"s infinite cubic-bezier("+x1+", "+y1+","+x2+","+y2+");");
   }
   update_bezier();
+
   function rando_num(min, max) {
   	return Math.random() * (max - min) + min;
   }
 
-  console.log(document.querySelectorAll(".demo-dot").length);
-
   function update_bezier() {
   	//grab random demo-dot
-  	console.log(document.querySelectorAll(".demo-dot")[0]);
   	var rando_fairy = rando_num(0, document.querySelectorAll(".demo-dot").length);
-  	console.log(Math.floor(rando_fairy));
+  	// console.log(Math.floor(rando_fairy));
+  	//todo: update where style is at
+  	console.log(window.getComputedStyle(document.querySelectorAll('.demo-dot')[0], ':after').getPropertyValue('style'));
   	var chosen = document.querySelectorAll(".demo-dot")[Math.floor(rando_num(0, document.querySelectorAll(".demo-dot").length))];
   	console.log(chosen);
   	var x1 = rando_num(0, 1);
   	var x2 = rando_num(0, 1);
   	var y1 = rando_num(0, 10);
   	var y2 = rando_num(0, 10);
-  	chosen.setAttribute("style", "animation: xAxis "+Math.round(rando_num(0.5, 4))+"s infinite cubic-bezier("+x1+", "+y1+","+x2+","+y2+");");
-  	// chosen.setAttribute("style", "animation: yAxis "+rando_num(0.5, 4)+"s infinite cubic-bezier"+x1+", "+y1+","+x2+","+y2+";");
+
+    var x = rando_num(0,4) * Math.sin(rando_num(1,10) * 2 * Math.PI); // x = ƒ(t)
+    var y = Math.cos(rando_num(0,10) * 2 * Math.PI); // y = ƒ(t)
+  	chosen.setAttribute("style", "animation: xAxis "+x+");");
+    console.log(chosen);
+    // var color = window.getComputedStyle(document.querySelector('.demo-dot'), ':after').getPropertyValue('style');
+    // console.log(color, "Style for after");
+//     var color = window.getComputedStyle(
+//   document.querySelector('.element'), ':before'
+
+// ).getPropertyValue('color')
+  	// chosen.setAttribute("style", "animation: yAxis "+rando_num(0.5, 4)+"s infinite cubic-bezier("+x1+", "+y1+","+x2+","+y2+");");
   }
 
-      setInterval(update_bezier, 4000);
+  setInterval(update_bezier, 2000);
   	//reference - https://github.com/yairEO/pathAnimator/
+    // https://codepen.io/danwilson/post/css-motion-paths
   	//https://github.com/epistemex/cardinal-spline-js
+  	//http://bashooka.com/coding/particle-effect-animation-tutorials-examples/
   	// cubic-bezier(x1, y1, x2, y2) - x1 and x2 must be in the range [0, 1] or the value is invalid.
   	//make the 50% translate across the width of the screen
-  </script>
+
+
+    //sudo code for a figure 8
+//     center = [thisComp.width,thisComp.height]/2;
+// radius = 200;
+// period = 3;
+// angle = 2*Math.PI*time/period;
+// x = 2*radius*Math.cos(angle)*Math.sqrt(Math.cos(angle)*Math.cos(angle));
+// y = 2*radius*Math.cos(angle)*Math.sin(angle);
+// center + [x,y]
+  </script> -->
 </html>
