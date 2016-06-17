@@ -110,14 +110,37 @@ var cx = window.innerWidth / 2;
   // cx = cw / 2;
 
 
-var R = 200;
+var R = 300;
 var t = 0;
 var x;
 var y;
+var variation;
+
+//make different fairies on different patterns
+
+function update_variation() {
+  // x = 1 + Math.floor((Math.random() * 3));
+  // lets them randomly teleport - not sure if desired until we see a bunch on screen
+  // t += Math.floor((Math.random() * 1.003));
+  //increase or decrease R
+  //make sure to decrease or reset after a threshold - it getting larger will makei t go 'faster'
+  //550 is a good stop - some percent of the screen?
+  //currently going to get stuck between those very quickly V
+  if(R <= cx/2) {
+    console.log("here");
+    R += Math.floor((Math.random() * 1.1));
+  } else {
+    console.log("no here");
+    R -= Math.floor((Math.random() * 1.1));
+  }
+  console.log(R);
+}
 
 function drawPoint(t, r, h) {
+  //stretch gives them a lil wiggle to show it's alive
   var stretch = 1+(Math.random() * 0.03);
   //cx and cy are positions
+  //R is scale
   x = cx + R * stretch * Math.cos(t);
   // x = cx + R * stretch * Math.cos(t);
   y = cy + R * Math.sin(t) * Math.cos(t);
@@ -131,13 +154,17 @@ function drawPoint(t, r, h) {
     for (var i = 0; i < 15; i++) {
       drawPoint(t + i / 20, 5 + 2 * i, 35);
     }
-    console.log(x, y, "x and y");
+    // console.log(x, y, "x and y");
 
     // var progress, x, y;
     if(start === null) {
       start = timestamp;
       stretchFactor = 1 + (Math.random() * 3);
+      // variation = 1 + (Math.random() * 3);
+      // console.log(variation);
     }
+    update_variation();
+    // console.log(t);
 
     // progress = (timestamp - start) / duration / 1000; // percent
     // console.log((timestamp - start)/duration, "timestamp");
@@ -163,6 +190,7 @@ function drawPoint(t, r, h) {
     // if(progress >= 1) start = null; // reset to start position
     requestAnimationFrame(step);
   }
+// setInterval(update_variation(variation), 1000);
 
   requestAnimationFrame(step);
 
