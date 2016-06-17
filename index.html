@@ -104,51 +104,30 @@
   var start = null;
   var stretchFactor;
 
-var ch = window.innerHeight,
-  cy = ch / 2;
-var cw = window.innerWidth,
-  cx = cw / 2;
+var cy = window.innerHeight / 2;
+  // cy = ch / 2;
+var cx = window.innerWidth / 2;
+  // cx = cw / 2;
 
 
 var R = 200;
 var t = 0;
 var x;
 var y;
-// function Draw() {
-//   t += .03;
-//   // ctx.clearRect(0, 0, cw, ch);
-//   for (var i = 0; i < 15; i++) {
-//     drawPoint(t + i / 20, 5 + 2 * i, 35);
-//   }
-
-//   requestId = window.requestAnimationFrame(Draw);
-// }
 
 function drawPoint(t, r, h) {
-
-  x = cx + R * Math.cos(t);
+  var stretch = 1+(Math.random() * 0.15);
+  //cx and cy are positions
+  x = cx + R * stretch * Math.cos(t);
+  // x = cx + R * stretch * Math.cos(t);
   y = cy + R * Math.sin(t) * Math.cos(t);
 
-  // ctx.fillStyle = Grd(x, y, r, h)
-
-  // ctx.beginPath();
-  // ctx.arc(x, y, r, 0, 2 * Math.PI);
-  // ctx.fill();
 }
-// requestId = window.requestAnimationFrame(Draw);
-
-// function Grd(x, y, r, h) {
-//   grd = ctx.createRadialGradient(x, y - .5 * r, 0, x, y - .5 * r, r);
-//   grd.addColorStop(0, 'hsla(' + h + ',90%,60%,1)');
-//   grd.addColorStop(1, 'hsla(' + h + ',90%,10%,.9)');
-
-//   return grd;
-// }
-
 
   function step(timestamp)
   {
-   t += .03;
+    //speed
+    t += .03;
     for (var i = 0; i < 15; i++) {
       drawPoint(t + i / 20, 5 + 2 * i, 35);
     }
