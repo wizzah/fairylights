@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Happy Wedding Day!</title>
-    <style>
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Wedding Day!</title>
+  <style>
     body {
     	background-image: url('forest.jpg');
     	background-repeat: no-repeat;
     	background-size: 100% auto;
     }
 
-	.demo-dot {
-	  /*-webkit-animation: xAxis 2.5s infinite cubic-bezier(0.02, 0.01, 0.21, 1);*/
-	  /*animation: xAxis 2.5s infinite cubic-bezier(0.02, 0.01, 0.21, 1);*/
-    position: absolute;
-	}
+    .demo-dot {
+     /*-webkit-animation: xAxis 2.5s infinite cubic-bezier(0.02, 0.01, 0.21, 1);*/
+     /*animation: xAxis 2.5s infinite cubic-bezier(0.02, 0.01, 0.21, 1);*/
+     position: absolute;
+   }
 
-	.demo-dot::after {
-	  content: '';
-	  display: block;
-	  width: 40px;
-	  height: 40px;
-	  border-radius: 20px;
-	  /*background-color: #fff;*/
+   .demo-dot::after {
+     content: '';
+     display: block;
+     width: 40px;
+     height: 40px;
+     border-radius: 20px;
+     /*background-color: #fff;*/
 
 	 /* -webkit-animation: yAxis 2.5s infinite cubic-bezier(0.3, 0.27, 0.07, 1.64);
 	  animation: yAxis 2.5s infinite cubic-bezier(0.3, 0.27, 0.07, 1.64);
@@ -30,17 +30,17 @@
     /*background: radial-gradient(ellipse at 50% -3%, rgba(96, 251, 202, 0.8), rgba(112, 220, 255, 0.5), rgba(255, 116, 225, 0.0) 50%), radial-gradient(circle at 80% 10%, rgba(96, 251, 202, 0.8), rgba(255, 255, 255, 0.0) 2%), radial-gradient(circle at 90% 20%, rgba(255, 251, 202, 0.8), rgba(255, 255, 255, 0.0) 1%);*/
     /*background-image: radial-gradient(1px at 10px 50% , rgba(255,153,0, 1) 0%, rgba(255,255, 0, 0.2), rgba(255, 255, 0, 0) 20px);*/
     background-image: radial-gradient(1px at 20px 50% , rgba(255,153,0, 1), rgba(255,255, 0, 0.4), rgba(255, 255, 0, 0) 22px)
-	}
-    </style>
-  </head>
-  <body>
-  	<div id="holder">
-	  	<div class="demo-dot"></div>
-	  	<div class="demo-dot"></div>
-	  	<div class="demo-dot"></div>
-  	</div>
-  </body>
-  <script>
+  }
+</style>
+</head>
+<body>
+ <div id="holder">
+  <div class="demo-dot"></div>
+  <div class="demo-dot"></div>
+  <div class="demo-dot"></div>
+</div>
+</body>
+<script>
   // Original JavaScript code by Chirp Internet: www.chirp.com.au
 // Please acknowledge use of this code by including this header.
 
@@ -58,25 +58,32 @@
   console.log(field, field.innerWidth, "client width");
   // var ball = document.getElementById("ball");
   var fairy = document.getElementsByClassName("demo-dot");
-  // [{},{speed}]
+  // [{},{time}]
   var fairylist = [];
   for(var i = 0; i < fairy.length; i++) {
-    fairy[i].style.left = (Math.random() * window.innerWidth)+"px";
-    fairy[i].style.bottom = (Math.random() * window.innerHeight)+"px";
+    // fairy[i].style.left = (Math.random() * window.innerWidth)+"px";
+    // fairy[i].style.bottom = (Math.random() * window.innerHeight)+"px";
     fairylist.push({
       fairy: fairy[i], 
-      R: 100+(Math.random()* 200),
-      speed: (Math.random() * 0.05),
+      R: 50+(Math.random()* 300),
+      time:  (Math.random() * 150),
+      // time: ((Math.random() * 8))/1000,
+      // time: .03,
       x: (Math.random() * window.innerWidth),
       y: (Math.random() * window.innerHeight),
       blink: false,
-      fade: false
-    })
+      fade: false,
+      //0 or 1 for true or false
+      change_r: Math.round(Math.random()),
+      circle: Math.round(Math.random()),
+      circle_speed: Math.round(Math.random()*3),
+      circle_angle: Math.round(Math.random()*360)
+    });
   }
   console.log(fairylist);
 
-  var maxX = field.innerWidth - fairy[0].offsetWidth;
-  var maxY = field.innerHeight - fairy[0].offsetHeight;
+  // var maxX = field.innerWidth - fairy[0].offsetWidth;
+  // var maxY = field.innerHeight - fairy[0].offsetHeight;
 
   var duration = 4; // seconds
   var gridSize = 100; // pixels
@@ -84,14 +91,14 @@
   var start = null;
   var stretchFactor;
 
-var cy = window.innerHeight / 2;
+  var cy = window.innerHeight / 2;
   // cy = ch / 2;
-var cx = window.innerWidth / 2;
+  var cx = window.innerWidth / 2;
   // cx = cw / 2;
 
 
-var R = 300;
-var t = 0;
+  var R = 300;
+// var t = 0;
 // var x;
 // var y;
 var variation;
@@ -116,20 +123,20 @@ function update_variation() {
   // console.log(R);
 }
 
-function drawPoint(t, r, h) {
-  //stretch gives them a lil wiggle to show it's alive
-  var stretch = 1+(Math.random() * 0.03);
-  //cx and cy are positions
-  //R is scale
-  x = cx + R * stretch * Math.cos(t);
-  // x = cx + R * stretch * Math.cos(t);
-  y = cy + R * Math.sin(t) * Math.cos(t);
+// function drawPoint(t, r, h) {
+//   //stretch gives them a lil wiggle to show it's alive
+//   var stretch = 1+(Math.random() * 0.03);
+//   //cx and cy are positions
+//   //R is scale
+//   x = cx + R * stretch * Math.cos(t);
+//   // x = cx + R * stretch * Math.cos(t);
+//   y = cy + R * Math.sin(t) * Math.cos(t);
 
-}
+// }
 
-  function step(timestamp)
-  {
-    //speed
+function step(timestamp)
+{
+    //time
     // t += .03;
     // for (var i = 0; i < 15; i++) {
     //   drawPoint(t + i / 20, 5 + 2 * i, 35);
@@ -145,7 +152,7 @@ function drawPoint(t, r, h) {
     }
     // update_variation();
     for(var j = 0; j < fairylist.length; j++) {
-      fairylist[j].speed += 0.1+(Math.random()* .03);
+      fairylist[j].time += 0.05+(Math.random() * 0.03);
       // for (var k = 0; k < 15; i++) {
         // var k =0;
         // drawPoint(t + k / 20, 5 + 2 * k, 35);
@@ -156,12 +163,30 @@ function drawPoint(t, r, h) {
         // var stretch = 1+(Math.random() * 0.03);
         //cx and cy are positions
         //R is scale
+
         cx = fairylist[j].x;
         cy = fairylist[j].y;
-        // x = cx + R * stretch * Math.cos(t);
-        // console.log(fairylist[j].speed);
-        x = cx + fairylist[j].R * Math.cos(fairylist[j].speed);
-        y = cy + fairylist[j].R * Math.sin(fairylist[j].speed) * Math.cos(fairylist[j].speed);
+
+        if(fairylist[j].circle == 1) {
+          // fairylist[j].circle_angle++;
+          fairylist[j].circle_angle+=fairylist[j].circle_speed;
+          if (fairylist[j].circle_angle>360) fairylist[j].circle_angle = 0;
+          x = cx + fairylist[j].R * Math.cos(fairylist[j].circle_angle * Math.PI / 180);
+          y = cy + fairylist[j].R * Math.sin(fairylist[j].circle_angle * Math.PI / 180);
+        } else {
+
+          if(fairylist[j].change_r == 1) {
+            if (fairylist[j].R < 300) {
+              fairylist[j].R += 1+(Math.random()*10);
+            }
+          }
+
+          // x = cx + R * stretch * Math.cos(t);
+          // console.log(fairylist[j].time);
+          x = cx + fairylist[j].R * Math.cos(fairylist[j].time);
+          y = cy + fairylist[j].R * Math.sin(fairylist[j].time) * Math.cos(fairylist[j].time);
+
+        }
         fairylist[j].fairy.style.left = x+"px";
         fairylist[j].fairy.style.bottom = y+"px";
         // requestAnimationFrame(step);
@@ -189,15 +214,15 @@ function drawPoint(t, r, h) {
     // }
     // fairy[0].style.left = x+"px";
     // fairy[0].style.bottom = y+"px";
-  
+
 
     // if(progress >= 1) start = null; // reset to start position
     requestAnimationFrame(step);
   }
 // setInterval(update_variation(variation), 1000);
 
-  requestAnimationFrame(step);
+requestAnimationFrame(step);
 
 })();
-  </script>
+</script>
 </html>
