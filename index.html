@@ -1,108 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Happy Wedding Day!</title>
-    <style>
-    body {
-    	background-image: url('forest.jpg');
-    	background-repeat: no-repeat;
-    	background-size: 100% auto;
-    }
-
-	.demo-dot {
-	  -webkit-animation: xAxis 2.5s infinite cubic-bezier(0.02, 0.01, 0.21, 1);
-	  animation: xAxis 2.5s infinite cubic-bezier(0.02, 0.01, 0.21, 1);
-	}
-
-	.demo-dot::after {
-	  content: '';
-	  display: block;
-	  width: 20px;
-	  height: 20px;
-	  border-radius: 20px;
-	  background-color: #fff;
-	  -webkit-animation: yAxis 2.5s infinite cubic-bezier(0.3, 0.27, 0.07, 1.64);
-	  animation: yAxis 2.5s infinite cubic-bezier(0.3, 0.27, 0.07, 1.64);
-	}
-
-	@-webkit-keyframes yAxis {
-	  50% {
-	    -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.21, 1);
-	    animation-timing-function: cubic-bezier(0.02, 0.01, 0.21, 1);
-	    -webkit-transform: translateY(-100px);
-	    transform: translateY(-100px);
-	  }
-	}
-
-	@keyframes yAxis {
-	  50% {
-	    -webkit-animation-timing-function: cubic-bezier(0.02, 0.01, 0.21, 1);
-	    animation-timing-function: cubic-bezier(0.02, 0.01, 0.21, 1);
-	    -webkit-transform: translateY(-100px);
-	    transform: translateY(-100px);
-	  }
-	}
-
-	@-webkit-keyframes xAxis {
-	  50% {
-	    -webkit-animation-timing-function: cubic-bezier(0.3, 0.27, 0.07, 1.64);
-	    animation-timing-function: cubic-bezier(0.3, 0.27, 0.07, 1.64);
-	    -webkit-transform: translateX(100px);
-	    transform: translateX(100px);
-	  }
-	}
-
-	@keyframes xAxis {
-	  50% {
-	    -webkit-animation-timing-function: cubic-bezier(0.3, 0.27, 0.07, 1.64);
-	    animation-timing-function: cubic-bezier(0.3, 0.27, 0.07, 1.64);
-	    -webkit-transform: translateX(100px);
-	    transform: translateX(100px);
-	  }
-	}
-    </style>
-  </head>
-  <body>
-  	<div class="demo-dot"></div>
-  	<div class="demo-dot"></div>
-  	<div class="demo-dot"></div>
-  </body>
-  <script>
-  //update them all first
-  for(var i = 0; i < document.querySelectorAll(".demo-dot").length; i++) {
-  	var x1 = rando_num(0, 1);
-  	var x2 = rando_num(0, 1);
-  	var y1 = rando_num(0, 10);
-  	var y2 = rando_num(0, 10);
-  	document.querySelectorAll(".demo-dot")[i].setAttribute("style", "animation: xAxis "+Math.round(rando_num(0.5, 4))+"s infinite cubic-bezier("+x1+", "+y1+","+x2+","+y2+");");
-  }
-  update_bezier();
-  function rando_num(min, max) {
-  	return Math.random() * (max - min) + min;
-  }
-
-  console.log(document.querySelectorAll(".demo-dot").length);
-
-  function update_bezier() {
-  	//grab random demo-dot
-  	console.log(document.querySelectorAll(".demo-dot")[0]);
-  	var rando_fairy = rando_num(0, document.querySelectorAll(".demo-dot").length);
-  	console.log(Math.floor(rando_fairy));
-  	var chosen = document.querySelectorAll(".demo-dot")[Math.floor(rando_num(0, document.querySelectorAll(".demo-dot").length))];
-  	console.log(chosen);
-  	var x1 = rando_num(0, 1);
-  	var x2 = rando_num(0, 1);
-  	var y1 = rando_num(0, 10);
-  	var y2 = rando_num(0, 10);
-  	chosen.setAttribute("style", "animation: xAxis "+Math.round(rando_num(0.5, 4))+"s infinite cubic-bezier("+x1+", "+y1+","+x2+","+y2+");");
-  	// chosen.setAttribute("style", "animation: yAxis "+rando_num(0.5, 4)+"s infinite cubic-bezier"+x1+", "+y1+","+x2+","+y2+";");
-  }
-
-      setInterval(update_bezier, 4000);
-  	//reference - https://github.com/yairEO/pathAnimator/
-  	//https://github.com/epistemex/cardinal-spline-js
-  	// cubic-bezier(x1, y1, x2, y2) - x1 and x2 must be in the range [0, 1] or the value is invalid.
-  	//make the 50% translate across the width of the screen
-  </script>
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css" />
+  <title>Happy Wedding Day!</title>
+</head>
+<body>
+ <div id="holder">
+  <div class="demo-dot"></div>
+  <div class="demo-dot"></div>
+  <div class="demo-dot"></div>
+  <div class="demo-dot"></div>
+  <div class="demo-dot"></div>
+  <div class="demo-dot"></div>
+  <div class="demo-dot"></div>
+  <div class="demo-dot"></div>
+  <div class="demo-dot"></div>
+  <div class="demo-dot"></div>
+</div>
+</body>
+<script type="text/javascript" src="main.js"></script>
 </html>
