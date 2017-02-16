@@ -1,0 +1,19 @@
+body {
+    background-image: url('forest.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    overflow: hidden;
+}
+
+.demo-dot {
+   position: absolute;
+}
+
+.demo-dot::after {
+   content: '';
+   display: block;
+   width: 40px;
+   height: 40px;
+   border-radius: 20px;
+   background-image: radial-gradient(1px at 20px 50% , rgba(255,153,0, 1), rgba(255,255, 0, 0.4), rgba(255, 255, 0, 0) 22px)
+}
